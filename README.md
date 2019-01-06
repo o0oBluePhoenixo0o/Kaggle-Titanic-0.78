@@ -1,3 +1,19 @@
+# Titanic Is Sinking?
+
+Attempt to build predictive models on the survival rate of titanic passengers.
+Overall, the process can be described as follow:
+
+1. Performed imputation on missing data using bagImpute from caret (bagImpute provided better results compare to normal replacement by mean values)
+2. Conducted binning on multiple categories (Fares, Ages, Family Size, Siblings Size)
+3. Tried to categorize "Name" into "Title" but it didn't yield better result
+4. Constructed baseline model with simple Logistic Regression, then move on to more complicated ones.
+5. Ensemble using voting method of 6 models
+
+
+### Rooms for improvement:
+- Feature selection should be implemented before building models
+- Parameters optimization for modeling (esp. random forest and gradient boosting machine)
+
 
 # Initialize packages
 
@@ -69,7 +85,7 @@ aggr_plot <- VIM::aggr(full,
 ## frequencies
 ```
 
-![](images/Missing data-1.png)<!-- -->
+![](https://github.com/o0oBluePhoenixo0o/Kaggle-Titanic-0.78/blob/master/images/Missing%20data-1.png)<!-- -->
 
 ```
 ## 
@@ -110,7 +126,7 @@ ggplot(full[1:891,], aes(Age, fill = factor(Survived))) +
 ## Warning: Removed 177 rows containing non-finite values (stat_bin).
 ```
 
-![](images/EDA- Impute missing data-1.png)<!-- -->
+![](https://github.com/o0oBluePhoenixo0o/Kaggle-Titanic-0.78/blob/master/images/EDA-%20Impute%20missing%20data-1.png)<!-- -->
 
 ```r
 # Age vs Sex vs Survived
@@ -129,7 +145,7 @@ ggplot(full[1:891,], aes(Age, fill = factor(Survived))) +
 ## Warning: Removed 177 rows containing non-finite values (stat_bin).
 ```
 
-![](images/EDA- Impute missing data-2.png)<!-- -->
+![](https://github.com/o0oBluePhoenixo0o/Kaggle-Titanic-0.78/blob/master/images/EDA-%20Impute%20missing%20data-2.png)<!-- -->
 
 ```r
 # Replace Embarked with most common 
@@ -205,7 +221,7 @@ qplot(full$Age,
       ylab = 'Count')
 ```
 
-![](images/FE- binning for ages-1.png)<!-- -->
+![](https://github.com/o0oBluePhoenixo0o/Kaggle-Titanic-0.78/blob/master/images/FE-%20binning%20for%20ages-1.png)<!-- -->
 
 ```r
 # Binning for train
@@ -230,7 +246,7 @@ qplot(full$Fare,
       ylab = 'Count')
 ```
 
-![](images/FE- binning for fares-1.png)<!-- -->
+![](https://github.com/o0oBluePhoenixo0o/Kaggle-Titanic-0.78/blob/master/images/FE-%20binning%20for%20fares-1.png)<!-- -->
 
 ```r
 # Binning fare
@@ -260,7 +276,7 @@ qplot(full$SibSp,
       ylab = 'Count')
 ```
 
-![](images/FE- Bining siblings and partners-1.png)<!-- -->
+![](https://github.com/o0oBluePhoenixo0o/Kaggle-Titanic-0.78/blob/master/images/FE-%20Bining%20siblings%20and%20partners-1.png)<!-- -->
 
 ```r
 # Binning siblngs
@@ -281,7 +297,7 @@ qplot(full$Parch,
       ylab = 'Count')
 ```
 
-![](images/FE- Bining siblings and partners-2.png)<!-- -->
+![](https://github.com/o0oBluePhoenixo0o/Kaggle-Titanic-0.78/blob/master/images/FE-%20Bining%20siblings%20and%20partners-2.png)<!-- -->
 
 ```r
 # Binning partner
@@ -697,345 +713,6 @@ GBM <- train(Survived ~.,
              trControl = train_control)
 ```
 
-```
-## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-##      1        1.2892             nan     0.1000    0.0222
-##      2        1.2517             nan     0.1000    0.0186
-##      3        1.2198             nan     0.1000    0.0151
-##      4        1.1967             nan     0.1000    0.0109
-##      5        1.1736             nan     0.1000    0.0117
-##      6        1.1524             nan     0.1000    0.0079
-##      7        1.1360             nan     0.1000    0.0092
-##      8        1.1195             nan     0.1000    0.0077
-##      9        1.1059             nan     0.1000    0.0061
-##     10        1.0956             nan     0.1000    0.0051
-##     20        1.0133             nan     0.1000    0.0033
-##     40        0.9624             nan     0.1000   -0.0009
-##     60        0.9446             nan     0.1000    0.0003
-##     80        0.9377             nan     0.1000   -0.0009
-##    100        0.9336             nan     0.1000   -0.0006
-##    120        0.9329             nan     0.1000   -0.0006
-##    140        0.9316             nan     0.1000   -0.0010
-##    150        0.9313             nan     0.1000   -0.0005
-## 
-## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-##      1        1.2668             nan     0.1000    0.0310
-##      2        1.2184             nan     0.1000    0.0255
-##      3        1.1781             nan     0.1000    0.0169
-##      4        1.1403             nan     0.1000    0.0184
-##      5        1.1067             nan     0.1000    0.0153
-##      6        1.0791             nan     0.1000    0.0118
-##      7        1.0562             nan     0.1000    0.0089
-##      8        1.0418             nan     0.1000    0.0066
-##      9        1.0244             nan     0.1000    0.0068
-##     10        1.0105             nan     0.1000    0.0055
-##     20        0.9248             nan     0.1000    0.0015
-##     40        0.8725             nan     0.1000    0.0002
-##     60        0.8566             nan     0.1000   -0.0013
-##     80        0.8486             nan     0.1000   -0.0013
-##    100        0.8422             nan     0.1000   -0.0008
-##    120        0.8371             nan     0.1000   -0.0008
-##    140        0.8309             nan     0.1000   -0.0004
-##    150        0.8299             nan     0.1000   -0.0017
-## 
-## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-##      1        1.2635             nan     0.1000    0.0376
-##      2        1.2040             nan     0.1000    0.0254
-##      3        1.1567             nan     0.1000    0.0253
-##      4        1.1168             nan     0.1000    0.0182
-##      5        1.0879             nan     0.1000    0.0118
-##      6        1.0597             nan     0.1000    0.0124
-##      7        1.0408             nan     0.1000    0.0090
-##      8        1.0210             nan     0.1000    0.0073
-##      9        1.0012             nan     0.1000    0.0069
-##     10        0.9849             nan     0.1000    0.0063
-##     20        0.9025             nan     0.1000   -0.0002
-##     40        0.8566             nan     0.1000    0.0001
-##     60        0.8414             nan     0.1000   -0.0029
-##     80        0.8313             nan     0.1000   -0.0008
-##    100        0.8273             nan     0.1000   -0.0021
-##    120        0.8237             nan     0.1000   -0.0016
-##    140        0.8189             nan     0.1000   -0.0011
-##    150        0.8181             nan     0.1000   -0.0020
-```
-
-```
-## Warning in (function (x, y, offset = NULL, misc = NULL, distribution =
-## "bernoulli", : variable 10: Fare_RangeMost expensive has no variation.
-```
-
-```
-## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-##      1        1.2818             nan     0.1000    0.0231
-##      2        1.2475             nan     0.1000    0.0195
-##      3        1.2146             nan     0.1000    0.0162
-##      4        1.1865             nan     0.1000    0.0119
-##      5        1.1662             nan     0.1000    0.0094
-##      6        1.1449             nan     0.1000    0.0096
-##      7        1.1233             nan     0.1000    0.0056
-##      8        1.1125             nan     0.1000    0.0057
-##      9        1.0955             nan     0.1000    0.0079
-##     10        1.0806             nan     0.1000    0.0062
-##     20        1.0054             nan     0.1000    0.0014
-##     40        0.9603             nan     0.1000   -0.0001
-##     60        0.9439             nan     0.1000   -0.0012
-##     80        0.9360             nan     0.1000   -0.0007
-##    100        0.9309             nan     0.1000   -0.0000
-##    120        0.9287             nan     0.1000   -0.0015
-##    140        0.9274             nan     0.1000   -0.0004
-##    150        0.9271             nan     0.1000   -0.0005
-```
-
-```
-## Warning in (function (x, y, offset = NULL, misc = NULL, distribution =
-## "bernoulli", : variable 10: Fare_RangeMost expensive has no variation.
-```
-
-```
-## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-##      1        1.2697             nan     0.1000    0.0327
-##      2        1.2239             nan     0.1000    0.0248
-##      3        1.1802             nan     0.1000    0.0190
-##      4        1.1474             nan     0.1000    0.0158
-##      5        1.1226             nan     0.1000    0.0112
-##      6        1.0995             nan     0.1000    0.0119
-##      7        1.0753             nan     0.1000    0.0091
-##      8        1.0567             nan     0.1000    0.0081
-##      9        1.0426             nan     0.1000    0.0064
-##     10        1.0331             nan     0.1000    0.0024
-##     20        0.9351             nan     0.1000    0.0015
-##     40        0.8856             nan     0.1000   -0.0005
-##     60        0.8683             nan     0.1000   -0.0026
-##     80        0.8553             nan     0.1000   -0.0007
-##    100        0.8522             nan     0.1000   -0.0014
-##    120        0.8487             nan     0.1000   -0.0006
-##    140        0.8443             nan     0.1000   -0.0010
-##    150        0.8433             nan     0.1000   -0.0009
-```
-
-```
-## Warning in (function (x, y, offset = NULL, misc = NULL, distribution =
-## "bernoulli", : variable 10: Fare_RangeMost expensive has no variation.
-```
-
-```
-## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-##      1        1.2629             nan     0.1000    0.0315
-##      2        1.2123             nan     0.1000    0.0277
-##      3        1.1644             nan     0.1000    0.0195
-##      4        1.1296             nan     0.1000    0.0181
-##      5        1.0948             nan     0.1000    0.0138
-##      6        1.0686             nan     0.1000    0.0122
-##      7        1.0470             nan     0.1000    0.0099
-##      8        1.0292             nan     0.1000    0.0086
-##      9        1.0134             nan     0.1000    0.0067
-##     10        0.9991             nan     0.1000    0.0067
-##     20        0.9179             nan     0.1000    0.0001
-##     40        0.8767             nan     0.1000   -0.0021
-##     60        0.8604             nan     0.1000   -0.0010
-##     80        0.8502             nan     0.1000   -0.0022
-##    100        0.8442             nan     0.1000   -0.0013
-##    120        0.8405             nan     0.1000   -0.0027
-##    140        0.8370             nan     0.1000   -0.0032
-##    150        0.8349             nan     0.1000   -0.0013
-## 
-## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-##      1        1.2873             nan     0.1000    0.0209
-##      2        1.2497             nan     0.1000    0.0169
-##      3        1.2262             nan     0.1000    0.0130
-##      4        1.2048             nan     0.1000    0.0112
-##      5        1.1879             nan     0.1000    0.0083
-##      6        1.1671             nan     0.1000    0.0078
-##      7        1.1471             nan     0.1000    0.0067
-##      8        1.1314             nan     0.1000    0.0062
-##      9        1.1200             nan     0.1000    0.0054
-##     10        1.1076             nan     0.1000    0.0047
-##     20        1.0423             nan     0.1000    0.0009
-##     40        0.9884             nan     0.1000    0.0006
-##     60        0.9712             nan     0.1000   -0.0014
-##     80        0.9610             nan     0.1000   -0.0016
-##    100        0.9574             nan     0.1000   -0.0026
-##    120        0.9557             nan     0.1000   -0.0017
-##    140        0.9523             nan     0.1000   -0.0000
-##    150        0.9516             nan     0.1000   -0.0009
-## 
-## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-##      1        1.2673             nan     0.1000    0.0281
-##      2        1.2191             nan     0.1000    0.0231
-##      3        1.1766             nan     0.1000    0.0201
-##      4        1.1437             nan     0.1000    0.0141
-##      5        1.1162             nan     0.1000    0.0134
-##      6        1.0949             nan     0.1000    0.0103
-##      7        1.0752             nan     0.1000    0.0099
-##      8        1.0597             nan     0.1000    0.0074
-##      9        1.0449             nan     0.1000    0.0065
-##     10        1.0327             nan     0.1000    0.0053
-##     20        0.9578             nan     0.1000    0.0026
-##     40        0.9093             nan     0.1000   -0.0016
-##     60        0.8894             nan     0.1000   -0.0007
-##     80        0.8812             nan     0.1000   -0.0021
-##    100        0.8754             nan     0.1000   -0.0009
-##    120        0.8715             nan     0.1000   -0.0014
-##    140        0.8663             nan     0.1000   -0.0012
-##    150        0.8645             nan     0.1000   -0.0002
-## 
-## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-##      1        1.2651             nan     0.1000    0.0284
-##      2        1.2104             nan     0.1000    0.0226
-##      3        1.1689             nan     0.1000    0.0182
-##      4        1.1325             nan     0.1000    0.0183
-##      5        1.1013             nan     0.1000    0.0129
-##      6        1.0734             nan     0.1000    0.0138
-##      7        1.0508             nan     0.1000    0.0097
-##      8        1.0341             nan     0.1000    0.0088
-##      9        1.0156             nan     0.1000    0.0062
-##     10        1.0002             nan     0.1000    0.0061
-##     20        0.9251             nan     0.1000    0.0024
-##     40        0.8809             nan     0.1000   -0.0012
-##     60        0.8671             nan     0.1000   -0.0000
-##     80        0.8600             nan     0.1000   -0.0011
-##    100        0.8547             nan     0.1000   -0.0034
-##    120        0.8504             nan     0.1000   -0.0008
-##    140        0.8475             nan     0.1000   -0.0013
-##    150        0.8486             nan     0.1000   -0.0017
-## 
-## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-##      1        1.2863             nan     0.1000    0.0264
-##      2        1.2450             nan     0.1000    0.0214
-##      3        1.2105             nan     0.1000    0.0171
-##      4        1.1816             nan     0.1000    0.0138
-##      5        1.1612             nan     0.1000    0.0113
-##      6        1.1423             nan     0.1000    0.0085
-##      7        1.1276             nan     0.1000    0.0069
-##      8        1.1061             nan     0.1000    0.0087
-##      9        1.0919             nan     0.1000    0.0071
-##     10        1.0808             nan     0.1000    0.0032
-##     20        1.0015             nan     0.1000    0.0015
-##     40        0.9546             nan     0.1000   -0.0002
-##     60        0.9422             nan     0.1000   -0.0000
-##     80        0.9379             nan     0.1000   -0.0007
-##    100        0.9371             nan     0.1000   -0.0013
-##    120        0.9337             nan     0.1000    0.0007
-##    140        0.9320             nan     0.1000   -0.0013
-##    150        0.9269             nan     0.1000   -0.0004
-## 
-## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-##      1        1.2687             nan     0.1000    0.0336
-##      2        1.2118             nan     0.1000    0.0273
-##      3        1.1616             nan     0.1000    0.0226
-##      4        1.1292             nan     0.1000    0.0183
-##      5        1.0954             nan     0.1000    0.0136
-##      6        1.0689             nan     0.1000    0.0129
-##      7        1.0502             nan     0.1000    0.0074
-##      8        1.0303             nan     0.1000    0.0081
-##      9        1.0172             nan     0.1000    0.0065
-##     10        1.0015             nan     0.1000    0.0065
-##     20        0.9250             nan     0.1000    0.0014
-##     40        0.8821             nan     0.1000    0.0006
-##     60        0.8636             nan     0.1000   -0.0010
-##     80        0.8566             nan     0.1000   -0.0002
-##    100        0.8519             nan     0.1000   -0.0010
-##    120        0.8474             nan     0.1000   -0.0020
-##    140        0.8425             nan     0.1000   -0.0014
-##    150        0.8426             nan     0.1000   -0.0007
-## 
-## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-##      1        1.2567             nan     0.1000    0.0379
-##      2        1.1927             nan     0.1000    0.0273
-##      3        1.1467             nan     0.1000    0.0231
-##      4        1.1098             nan     0.1000    0.0188
-##      5        1.0879             nan     0.1000    0.0087
-##      6        1.0586             nan     0.1000    0.0111
-##      7        1.0364             nan     0.1000    0.0098
-##      8        1.0155             nan     0.1000    0.0097
-##      9        0.9954             nan     0.1000    0.0056
-##     10        0.9802             nan     0.1000    0.0072
-##     20        0.9079             nan     0.1000    0.0008
-##     40        0.8673             nan     0.1000   -0.0019
-##     60        0.8560             nan     0.1000   -0.0024
-##     80        0.8457             nan     0.1000   -0.0015
-##    100        0.8418             nan     0.1000   -0.0014
-##    120        0.8364             nan     0.1000   -0.0028
-##    140        0.8326             nan     0.1000   -0.0022
-##    150        0.8310             nan     0.1000   -0.0013
-## 
-## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-##      1        1.2860             nan     0.1000    0.0233
-##      2        1.2502             nan     0.1000    0.0184
-##      3        1.2257             nan     0.1000    0.0144
-##      4        1.2003             nan     0.1000    0.0125
-##      5        1.1802             nan     0.1000    0.0099
-##      6        1.1608             nan     0.1000    0.0071
-##      7        1.1456             nan     0.1000    0.0074
-##      8        1.1307             nan     0.1000    0.0062
-##      9        1.1155             nan     0.1000    0.0055
-##     10        1.1073             nan     0.1000    0.0047
-##     20        1.0366             nan     0.1000    0.0025
-##     40        0.9879             nan     0.1000    0.0004
-##     60        0.9651             nan     0.1000    0.0001
-##     80        0.9529             nan     0.1000   -0.0006
-##    100        0.9468             nan     0.1000   -0.0005
-##    120        0.9429             nan     0.1000   -0.0016
-##    140        0.9396             nan     0.1000   -0.0005
-##    150        0.9383             nan     0.1000   -0.0001
-## 
-## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-##      1        1.2722             nan     0.1000    0.0316
-##      2        1.2259             nan     0.1000    0.0214
-##      3        1.1808             nan     0.1000    0.0190
-##      4        1.1490             nan     0.1000    0.0143
-##      5        1.1243             nan     0.1000    0.0087
-##      6        1.1019             nan     0.1000    0.0072
-##      7        1.0776             nan     0.1000    0.0080
-##      8        1.0602             nan     0.1000    0.0092
-##      9        1.0431             nan     0.1000    0.0056
-##     10        1.0308             nan     0.1000    0.0029
-##     20        0.9519             nan     0.1000    0.0013
-##     40        0.8988             nan     0.1000   -0.0014
-##     60        0.8842             nan     0.1000   -0.0005
-##     80        0.8794             nan     0.1000   -0.0007
-##    100        0.8753             nan     0.1000   -0.0012
-##    120        0.8724             nan     0.1000   -0.0009
-##    140        0.8695             nan     0.1000   -0.0004
-##    150        0.8668             nan     0.1000   -0.0002
-## 
-## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-##      1        1.2615             nan     0.1000    0.0319
-##      2        1.2074             nan     0.1000    0.0240
-##      3        1.1618             nan     0.1000    0.0191
-##      4        1.1264             nan     0.1000    0.0141
-##      5        1.0983             nan     0.1000    0.0101
-##      6        1.0701             nan     0.1000    0.0126
-##      7        1.0455             nan     0.1000    0.0086
-##      8        1.0273             nan     0.1000    0.0089
-##      9        1.0136             nan     0.1000    0.0073
-##     10        1.0016             nan     0.1000    0.0038
-##     20        0.9187             nan     0.1000    0.0009
-##     40        0.8829             nan     0.1000   -0.0008
-##     60        0.8712             nan     0.1000   -0.0017
-##     80        0.8652             nan     0.1000   -0.0019
-##    100        0.8595             nan     0.1000   -0.0005
-##    120        0.8575             nan     0.1000   -0.0023
-##    140        0.8539             nan     0.1000   -0.0015
-##    150        0.8523             nan     0.1000   -0.0011
-## 
-## Iter   TrainDeviance   ValidDeviance   StepSize   Improve
-##      1        1.2666             nan     0.1000    0.0331
-##      2        1.2199             nan     0.1000    0.0253
-##      3        1.1796             nan     0.1000    0.0210
-##      4        1.1469             nan     0.1000    0.0166
-##      5        1.1200             nan     0.1000    0.0131
-##      6        1.0970             nan     0.1000    0.0106
-##      7        1.0764             nan     0.1000    0.0102
-##      8        1.0588             nan     0.1000    0.0079
-##      9        1.0421             nan     0.1000    0.0071
-##     10        1.0292             nan     0.1000    0.0071
-##     20        0.9465             nan     0.1000    0.0025
-##     40        0.8939             nan     0.1000   -0.0001
-##     60        0.8778             nan     0.1000   -0.0008
-##     80        0.8701             nan     0.1000   -0.0003
-##    100        0.8662             nan     0.1000   -0.0007
-```
 
 ```r
 # Prediction
@@ -1162,7 +839,7 @@ submission <- submission %>%
 corrplot.mixed(cor(submission[,2:ncol(submission)]), order="hclust", tl.col="black")
 ```
 
-![](images/Ensemble - Get correlation plot-1.png)<!-- -->
+![](https://github.com/o0oBluePhoenixo0o/Kaggle-Titanic-0.78/blob/master/images/Ensemble%20-%20Get%20correlation%20plot-1.png)<!-- -->
 
 
 
