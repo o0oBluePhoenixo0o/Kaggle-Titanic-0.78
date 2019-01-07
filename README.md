@@ -1,6 +1,9 @@
 # Titanic Is Sinking?
 
+### __Kaggle Kernel:__ https://www.kaggle.com/bluephoenix/titanic-is-sinking-bagimputed-gbm
+
 Attempt to build predictive models on the survival rate of titanic passengers.
+
 Overall, the process can be described as follow:
 
 1. Performed imputation on missing data using bagImpute from caret (bagImpute provided better results compare to normal replacement by mean values)
